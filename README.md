@@ -1,108 +1,257 @@
-# Meridian House — MERN Hotel Booking Platform
+# 🏨 Meridian House – MERN Hotel Booking Platform
 
-A full-featured hotel booking website built with MongoDB, Express, React, and Node.js.
+A modern full-stack hotel booking platform built with the **MERN Stack** (MongoDB, Express.js, React, and Node.js). The application provides secure authentication, room management, online booking, Stripe payments, and an admin dashboard with a clean, responsive user interface.
 
-## Features
+---
 
-- **Auth** — JWT-based register/login (httpOnly cookie + bearer token fallback), role-based access (guest/admin)
-- **Rooms** — browse, filter by category/price/search, live availability check by date range
-- **Bookings** — date-conflict-safe reservations, per-user booking history, cancellation
-- **Payments** — Stripe Payment Intents + Stripe Elements checkout
-- **Admin dashboard** — stats overview, room CRUD, booking status management, user/role management
+# ✨ Features
 
-## Project structure
+## Guest Features
 
-```
+- User registration & login
+- JWT authentication
+- Browse available rooms
+- Search and filter rooms
+- Room details with images
+- Live room availability
+- Secure room booking
+- Stripe online payments
+- Booking history
+- User profile management
+- Booking cancellation
+
+## Admin Features
+
+- Admin dashboard
+- Manage rooms (Create, Update, Delete)
+- Manage bookings
+- Manage users
+- Booking status updates
+- Dashboard statistics
+
+---
+
+# 🛠 Tech Stack
+
+### Frontend
+
+- React
+- Vite
+- Tailwind CSS
+- React Router
+- Axios
+- Stripe Elements
+
+### Backend
+
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT Authentication
+- bcrypt
+- Stripe API
+
+---
+
+# 📁 Project Structure
+
+```text
 hotel-booking-mern/
-├── backend/     Express API, MongoDB models, JWT auth, Stripe integration
-└── frontend/    React (Vite) + Tailwind CSS SPA
+│
+├── backend/
+│   ├── config/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── utils/
+│   ├── server.js
+│
+├── frontend/
+│   ├── src/
+│   │   ├── api/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── pages/
+│   │   └── App.jsx
+│
+├── .gitignore
+├── README.md
+└── package.json
 ```
+
+---
+
+# 🚀 Getting Started
 
 ## Prerequisites
 
 - Node.js 18+
-- MongoDB (local install or a free MongoDB Atlas cluster)
-- A Stripe account (test mode is fine) if you want payments working
+- MongoDB (Local or Atlas)
+- Stripe Account (Optional for online payments)
 
-## 1. Backend setup
+---
+
+## Installation
+
+Clone the repository
+
+```bash
+git clone https://github.com/your-username/hotel-booking-mern.git
+
+cd hotel-booking-mern
+```
+
+Install backend dependencies
 
 ```bash
 cd backend
 npm install
-cp .env.example .env
 ```
 
-Edit `.env`:
-
-```
-MONGO_URI=mongodb://127.0.0.1:27017/hotel_booking
-JWT_SECRET=some_long_random_string
-STRIPE_SECRET_KEY=sk_test_xxx
-CLIENT_URL=http://localhost:5173
-```
-
-Seed sample rooms + demo accounts (optional but recommended):
+Install frontend dependencies
 
 ```bash
+cd ../frontend
+npm install
+```
+
+---
+
+# ⚙️ Environment Variables
+
+Create a `.env` file inside the **backend** folder.
+
+Example:
+
+```env
+PORT=5000
+
+MONGO_URI=your_mongodb_connection_string
+
+JWT_SECRET=your_jwt_secret
+
+CLIENT_URL=http://localhost:5173
+
+STRIPE_SECRET_KEY=your_stripe_secret_key
+```
+
+Create another `.env` file inside the **frontend** folder.
+
+```env
+VITE_API_URL=http://localhost:5000/api
+
+VITE_STRIPE_PUBLISHABLE_KEY=your_publishable_key
+```
+
+> **Important:** Never commit your `.env` files or real API keys to GitHub.
+
+---
+
+# 🌱 Seed Database (Optional)
+
+Populate the database with sample rooms and demo accounts.
+
+```bash
+cd backend
+
 npm run seed
 ```
 
-This creates:
-- Admin login: `admin@hotel.com` / `admin123`
-- Guest login: `guest@hotel.com` / `guest123`
-- 6 sample rooms across all categories
+---
 
-Start the API:
+# ▶️ Running the Application
+
+### Backend
 
 ```bash
+cd backend
+
 npm run dev
 ```
 
-The API runs at `http://localhost:5000`.
+Runs on:
 
-## 2. Frontend setup
+```
+http://localhost:5000
+```
+
+### Frontend
 
 ```bash
 cd frontend
-npm install
-cp .env.example .env
-```
 
-Edit `.env`:
-
-```
-VITE_API_URL=http://localhost:5000/api
-VITE_STRIPE_PUBLISHABLE_KEY=pk_test_xxx
-```
-
-Start the dev server:
-
-```bash
 npm run dev
 ```
 
-The site runs at `http://localhost:5173`.
+Runs on:
 
-> If you skip Stripe keys, everything works except the payment step — bookings are still created as "pending / unpaid" and admins can mark them confirmed manually.
+```
+http://localhost:5173
+```
 
-## API overview
+---
 
-| Method | Route | Access |
-|---|---|---|
-| POST | `/api/auth/register` | Public |
-| POST | `/api/auth/login` | Public |
-| GET | `/api/rooms` | Public (supports `?category&minPrice&maxPrice&capacity&search&sort`) |
-| GET | `/api/rooms/:id/availability?checkIn&checkOut` | Public |
-| POST | `/api/rooms` | Admin |
-| POST | `/api/bookings` | Guest (checks date conflicts server-side) |
-| GET | `/api/bookings/my` | Guest |
-| PUT | `/api/bookings/:id/cancel` | Owner or admin |
-| GET | `/api/bookings` | Admin |
-| POST | `/api/payments/create-payment-intent` | Guest |
-| GET | `/api/users` | Admin |
+# 💳 Payment Integration
 
-## Deployment notes
+The application supports secure online payments using **Stripe Payment Elements**.
 
-- Backend: any Node host (Render, Railway, Fly.io). Set env vars, point `MONGO_URI` to Atlas.
-- Frontend: Vercel/Netlify. Set `VITE_API_URL` to your deployed backend URL, update backend `CLIENT_URL` to match your deployed frontend origin (for CORS).
-- Switch Stripe to live keys only once you've tested the full flow in test mode.
+To enable payments, configure your Stripe API keys in the backend and frontend `.env` files.
+
+---
+
+# 🚀 Deployment
+
+### Frontend
+
+Deploy to:
+
+- Vercel
+- Netlify
+
+### Backend
+
+Deploy to:
+
+- Railway
+- Render
+- Fly.io
+- VPS
+
+Configure the required environment variables on your hosting platform before deployment.
+
+---
+
+# 📸 Main Pages
+
+- Home
+- Rooms
+- Room Details
+- Checkout
+- Login
+- Register
+- Profile
+- My Bookings
+- Admin Dashboard
+- Manage Rooms
+- Manage Bookings
+- Manage Users
+
+---
+
+# 🔮 Future Improvements
+
+- Email notifications
+- Room reviews and ratings
+- Coupon & discount system
+- Multiple payment gateways
+- Multi-language support
+- Dark mode
+- PWA support
+
+---
+
+# 📄 License
+
+This project is created for educational purposes, portfolio showcase, and freelance development.
