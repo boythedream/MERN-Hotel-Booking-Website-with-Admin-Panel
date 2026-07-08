@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-paper text-ink-900;
+  }
+  ::selection {
+    @apply bg-brass/30;
+  }
+  *:focus-visible {
+    outline: 2px solid #A9812F;
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply font-mono text-xs tracking-[0.2em] uppercase text-brass-dark;
+  }
+  .plaque {
+    @apply border border-ink-900/10 bg-paper-soft rounded-sm;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 bg-ink-900 text-paper-soft px-6 py-3 rounded-sm font-body font-medium tracking-wide hover:bg-ink-600 transition-colors duration-200;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 border border-ink-900 text-ink-900 px-6 py-3 rounded-sm font-body font-medium tracking-wide hover:bg-ink-900 hover:text-paper-soft transition-colors duration-200;
+  }
+  .input {
+    @apply w-full border border-ink-900/20 bg-paper-soft rounded-sm px-4 py-2.5 text-ink-900 placeholder:text-ink-400/60 focus:border-brass focus:outline-none transition-colors;
+  }
+  .hairline {
+    @apply border-t border-ink-900/10;
+  }
+}
